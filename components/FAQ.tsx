@@ -9,7 +9,7 @@ const faqs = [
   },
   {
     q: "Do I need to make a booking or can I walk in?",
-    a: "Walk-ins are welcome subject to availability. For guaranteed time slots — especially for Premium and Deluxe — we recommend booking ahead via phone or the contact form below.",
+    a: "Walk-ins are welcome subject to availability. For guaranteed time slots — especially for Premium and Deluxe — we recommend booking ahead via WhatsApp using the form below.",
   },
   {
     q: "Are your products safe for ceramic coatings and wraps?",
