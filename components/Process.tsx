@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 const steps = [
   {
@@ -59,48 +59,15 @@ const steps = [
   },
 ];
 
-const AUTO_ADVANCE_MS = 3500;
-
 export default function Process() {
   const [active, setActive] = useState(0);
   const [hovered, setHovered] = useState<number | null>(null);
-  const [paused, setPaused] = useState(false);
-  const [imgKey, setImgKey] = useState(0);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const displayed = hovered !== null ? hovered : active;
 
-  const goTo = (i: number) => {
-    setActive(i);
-    setImgKey((k) => k + 1);
-    setPaused(false);
-  };
-
-  const handleHoverEnter = (i: number) => {
-    setHovered(i);
-    setImgKey((k) => k + 1);
-    setPaused(true);
-  };
-
-  const handleHoverLeave = () => {
-    setHovered(null);
-    setImgKey((k) => k + 1);
-    setPaused(false);
-  };
-
-  useEffect(() => {
-    if (paused) return;
-    timerRef.current = setTimeout(() => {
-      setActive((prev) => {
-        const next = (prev + 1) % steps.length;
-        setImgKey((k) => k + 1);
-        return next;
-      });
-    }, AUTO_ADVANCE_MS);
-    return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
-    };
-  }, [active, paused]);
+  const goTo = (i: number) => setActive(i);
+  const handleHoverEnter = (i: number) => setHovered(i);
+  const handleHoverLeave = () => setHovered(null);
 
   return (
     <section id="process" className="py-24 bg-[#F8F9FC] overflow-hidden">
@@ -168,25 +135,12 @@ export default function Process() {
                       {s.title}
                     </span>
 
-                    {/* Right side: progress bar when active, arrow otherwise */}
-                    {isActive && !isHov ? (
-                      <div className="w-16 h-1 rounded-full bg-slate-100 overflow-hidden shrink-0">
-                        <div
-                          className="h-full bg-[#2563EB] rounded-full"
-                          style={{
-                            animation: `progress-fill ${AUTO_ADVANCE_MS}ms linear forwards`,
-                          }}
-                          key={`prog-${active}`}
-                        />
-                      </div>
-                    ) : (
-                      <svg
-                        width="16" height="16" viewBox="0 0 16 16" fill="none"
-                        className={`shrink-0 transition-all duration-200 ${isHighlit ? "text-[#2563EB] translate-x-0.5" : "text-slate-300"}`}
-                      >
-                        <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    )}
+                    <svg
+                      width="16" height="16" viewBox="0 0 16 16" fill="none"
+                      className={`shrink-0 transition-all duration-200 ${isHighlit ? "text-[#2563EB] translate-x-0.5" : "text-slate-300"}`}
+                    >
+                      <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </div>
 
                   {/* Expanded description — only for active */}
@@ -318,12 +272,7 @@ export default function Process() {
         </div>
       </div>
 
-      <style>{`
-        @keyframes progress-fill {
-          from { width: 0%; }
-          to { width: 100%; }
-        }
-      `}</style>
+
     </section>
   );
 }
