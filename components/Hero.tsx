@@ -94,11 +94,17 @@ export default function Hero() {
       <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent z-10" />
 
       {/* Scroll cue */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 animate-bounce">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20" style={{ animation: "scrollCue 2s ease-in-out infinite" }}>
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center pt-2">
           <div className="w-1 h-2.5 bg-white/50 rounded-full" />
         </div>
       </div>
+      <style>{`
+        @keyframes scrollCue {
+          0%, 100% { transform: translateX(-50%) translateY(0); }
+          50% { transform: translateX(-50%) translateY(6px); }
+        }
+      `}</style>
     </section>
   );
 }
