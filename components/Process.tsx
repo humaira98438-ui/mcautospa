@@ -128,7 +128,7 @@ export default function Process() {
         </div>
 
         {/* Main layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start lg:min-h-[600px]">
           {/* Accordion list */}
           <div className="flex flex-col gap-2">
             {steps.map((s, i) => {
@@ -250,10 +250,10 @@ export default function Process() {
                   key={i}
                   src={s.photoUrl}
                   alt={s.photoAlt}
-                  className="absolute inset-0 w-full h-full object-cover transition-all duration-500 ease-in-out"
+                  className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-in-out"
                   style={{
                     opacity: displayed === i ? 1 : 0,
-                    transform: displayed === i ? "scale(1)" : "scale(1.04)",
+                    willChange: "opacity",
                   }}
                   loading="eager"
                 />
